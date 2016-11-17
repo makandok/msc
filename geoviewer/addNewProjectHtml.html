@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Road Projects Viewer</title>
+    <link rel="stylesheet" type="text/css" href="styles\geoviewer.css" />
+
+    <!--Use these rather than the relative paths below
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="http://openlayers.org/en/v3.4.0/build/ol.js" type="text/javascript"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.5.0/ol.css" type="text/css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.5.0/ol.js"></script>
+        -->
+    <!--<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>-->
+    <!-- plus a jQuery UI theme, here I use "flick" -->
+    <!--<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">-->
+
+    <script src="bootstrap/jquery.min.js"></script>
+
+    <script src="bootstrap/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/bootstrap-theme.min.css">
+    <script src="bootstrap/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="leaflet/leaflet.css" />
+    <link rel="stylesheet" href="social/social-buttons.css" type="text/css">
+    <script type="text/javascript">
+        function cancelAddProject() {
+            clearAddProjectsControlAndHide();
+            setElementState({ elementName: "showaddprjbtn", visibility: "visible" });
+        };
+
+        function clearAddProjectsControlAndHide() {
+            currentTask = defaultTask;
+            newprojectadded = getBlankProject();
+            $("#prjname").val(newprojectadded.projectName);
+            $("#prjstartdate").val(newprojectadded.projectStartDate);
+            $("#roadsselectedcount").val(0);
+
+            setElementState({ elementName: "addProjectsControldiv", visibility: "hidden" });
+        };
+    </script>
+
+</head>
+    <body>
+        <div id="hidden_addnewprojecthtml" style="width:300px; background-color:lightblue">
+            <h4>Add new Project</h4>
+            <label id="prjnamelbl">Project Name</label>
+            <input id="prjname" type="textbox" />
+            <label id="prjstartdatelbl">Project Start Date</label>
+            <input id="prjstartdate" type="date" />
+            <p>Before you save, click on any roads in the map to add them to this project</p>
+            <label>Roads selected: </label>
+            <output id="roadsselectedcount">0</output>
+            <input id="saveprojectbtn" type="submit" value="Save" class="btn btn-lg" onclick=validateAndAddPoject()>
+            <input type="submit" value="Cancel" class="btn btn-lg" onclick=cancelAddProject()>
+        </div>
+    </body>
+</html>

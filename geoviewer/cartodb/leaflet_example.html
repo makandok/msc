@@ -1,0 +1,105 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet example | CartoDB.js</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+    <style>
+        html, body, #map {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="v3/3.11/themes/css/cartodb.css" />
+    <link rel="stylesheet" href="social/social-buttons.css" type="text/css">
+</head>
+<body>
+    <div id="map"></div>
+
+    <!-- include cartodb.js library -->
+    <script src="v3/3.11/cartodb.js"></script>
+    <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
+
+    <script>
+        function main() {
+            var map = new L.Map('map', {
+                zoomControl: true,
+                center: [-15.42714, 28.30715], 
+                zoom: 12
+            });
+
+            //var MapQuestOpen_Aerial = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.{ext}', {
+            //    type: 'sat',
+            //    ext: 'jpg',
+            //    attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency',
+            //    subdomains: '1234'
+            //});
+            //map.addLayer(MapQuestOpen_Aerial);
+
+            //var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            //var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+            //var osm = new L.TileLayer(osmUrl, { minZoom: 12, maxZoom: 22, attribution: osmAttrib });
+            //map.addLayer(osm);
+
+            //L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+            //    maxZoom: 22
+            //    ,id: 'examples.map-20v6611k'
+            //}).addTo(map);
+
+            //L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
+            //    attribution: 'Stamen'
+            //}).addTo(map);
+
+            //var url = "https://makandok.cartodb.com/api/v2/sql";
+            //$.getJSON(url, function(data) {
+            //    geojsonLayer = L.geoJson(data, {
+            //        onEachFeature: function(feature, layer) {
+            //            layer.cartodb_id = feature.properties.cartodb_id;
+            //            drawnItems.addLayer(layer);
+            //        }
+            //    });
+            //    map.addLayer(drawnItems);
+            //});
+
+            var map_url = 'https://makandok.cartodb.com/api/v2_1/viz/fce3a818-136e-11e5-9aca-0e018d66dc29/viz.json';
+
+            cartodb.createLayer(map, map_url)
+                .addTo(map)
+                .on('done', function (layer) {
+
+                    layer.setInteraction(true);
+
+                    layer.on('featureOver', function (e, pos, latlng, data) {
+                        cartodb.log.log(e, pos, latlng, data);
+                    });
+
+                    layer.on('error', function (err) {
+                        cartodb.log.log('error: ' + err);
+                    });
+                }).on('error', function () {
+                    cartodb.log.log("some error occurred");
+                });
+
+            //todo: figure out why this is not working
+            var sublayer_query = {
+                sql: "select * From lsk_roads_uu  order by st_length(the_geom) desc limit (select (select count(*) from lsk_roads_up )/4)",
+                cartocss: "#lsk_roads_uu{marker-fill: #2b8cbe; marker-width: 5; marker-line-color: #8856a7; marker-line-width: 2;}"
+            }
+
+            cartodb.createLayer(map, map_url)
+                .addTo(map)
+                .on('done', function (layer) {
+                    layer.getSubLayer(0).set(sublayer_query);
+                }).on('error', function () {
+                    cartodb.log.log("some error occurred");
+                });
+        }
+
+        // you could use $(window).load(main);
+        window.onload = main;
+    </script>
+</body>
+</html>

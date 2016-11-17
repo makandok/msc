@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>KML feature details</title>
+    <style>
+        html, body, #map-canvas {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script>
+function initialize() {
+    var myLatlng = new google.maps.LatLng(-15.42714, 28.30715);
+  var mapOptions = {
+    zoom: 12,
+    center: myLatlng
+  };
+
+  var map = new google.maps.Map(document.getElementById('map'),
+      mapOptions);
+
+  var kmlLayer = new google.maps.KmlLayer(
+      {
+        url: 'http://maps.zambiasystems.com/geo/lsk_roads_uu.kml',
+        //url: 'http://maps.zambiasystems.com/geo/lsk_roads_trunk.kml',
+        //url: 'http://kml-samples.googlecode.com/svn/trunk/kml/Placemark/placemark.kml',
+        suppressInfoWindows: true,
+        map: map
+    });
+
+  google.maps.event.addListener(kmlLayer, 'click', function(kmlEvent) {
+    var text = kmlEvent.featureData.description;
+    showInContentWindow(text);
+  });
+
+  function showInContentWindow(text) {
+    var sidediv = document.getElementById('content-window');
+    sidediv.innerHTML = text;
+  }
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+</head>
+<body>
+    <div id="map" style="width:79%; height:100%; float:left"></div>
+    <div id="content-window" style="width:19%; height:100%; float:left"></div>
+</body>
+</html>

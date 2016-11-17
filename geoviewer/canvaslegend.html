@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+    <title>Welcome home</title>
+    <style>
+        canvas {
+            /*width: 1024px;
+            height: 768px;*/
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <!--<h4>Canvas is below</h4>-->
+    <canvas id="dsurf" width="150" height="200">
+        Canvas not supported
+    </canvas>
+	<script>
+	var maincanvas = document.getElementById("dsurf");
+	var maincontext = maincanvas.getContext("2d");
+	
+	var scalefactor = 1;
+	var defaultsymbolsize = 2;
+	
+	var fakecanvas = document.createElement("canvas");
+	fakecanvas.width = maincanvas.width*scalefactor;
+	fakecanvas.width = maincanvas.height*scalefactor;
+	var fakecontext = fakecanvas.getContext("2d");
+		
+	
+	(function drawVerticalLegend(ctx, legenditems, symbolsize, legendTitle) {
+		function drawAreaFillSymbol(ctx, xcoord, ycoord, symbolsize){
+			ctx.beginPath();
+			ctx.fillRect(xcoord, ycoord, symbolsize, symbolsize);
+			ctx.closePath();
+			ctx.fill();
+			};
+	
+		function drawLineSymbol(ctx, xcoord, ycoord, symbolsize){
+			ctx.beginPath();
+			ctx.moveTo(xcoord, ycoord+(symbolsize/2));
+			ctx.lineTo(xcoord+symbolsize, ycoord+(symbolsize/2));
+			ctx.stroke();
+			};
+			
+		function drawTextLabel(labeltext, xcoord, ycoord, fontsize, mainctx){
+			mainctx.fillStyle = "black";
+			mainctx.font=fontsize+"px sans-serif";
+			mainctx.fillText(labeltext, xcoord, ycoord);	
+			};
+			
+		var fontsize = symbolsize-(symbolsize*2/10);
+		
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = 2;
+		
+		ctx.translate(10, symbolsize);
+		drawTextLabel(legendTitle, 0, symbolsize/2, symbolsize, ctx);
+		
+		ctx.translate(0, symbolsize);
+		var cellgap = 4; //symbolsize/10;
+		var currentrow = 0;	
+		for (var itemindx in legenditems) {
+			//if(itemindx==1)break;
+			//we create a square for this item
+			console.log(itemindx);
+			var x1=(itemindx*symbolsize) + itemindx*cellgap;
+			var y1=0;
+				
+			var y2=(itemindx*symbolsize) + itemindx*cellgap;
+			var x2=0;
+			
+			var fract = ((itemindx*1.0)+1)/legenditems.length;
+			ctx.fillStyle = "rgba(0,0,255," + fract + ")";
+			ctx.strokeStyle = "rgba(0,0,255," + fract + ")";
+			if(itemindx%2==0)
+			drawAreaFillSymbol(ctx, x2, y2 , symbolsize);	
+			else
+			drawLineSymbol(ctx, x2, y2 , symbolsize, symbolsize*2);
+			//we write the symbol label
+			//we determine a font size proportional to the symbol e.g. 80% size
+			
+			ctx.fillStyle = "black";
+			ctx.font=fontsize+"px sans-serif";
+			ctx.fillText(legenditems[itemindx], x2+(symbolsize+cellgap+cellgap), y2+((symbolsize+cellgap+cellgap)/2));	
+			
+			console.log("(x,y): ("+x2+", "+ y2+")");
+			currentrow++;
+		}
+	})
+	//(fakecontext, ["0 - 10", "11 - 15", "16 - 30", "31 - 80", "81 - 100"],defaultsymbolsize*scalefactor, "Legend");
+	(maincontext, ["0 - 10", "11 - 15", "16 - 30", "31 - 80", "81 - 100"],20, "Legend");
+		
+	//maincontext.drawImage(fakecanvas, 0,0, fakecanvas.width, fakecanvas.height, 0,0, 512,512*fakecanvas.height/fakecanvas.width);
+	</script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Google Maps Data Viewer</title>
+        <link rel="stylesheet" type="text/css" href="styles\geoviewer.css"/>
+        
+        <!--Use these rather than the relative paths below
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+            <script src="http://openlayers.org/en/v3.4.0/build/ol.js" type="text/javascript"></script>
+        
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.5.0/ol.css" type="text/css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.5.0/ol.js"></script>
+            -->
+
+        <script src="bootstrap\jquery.min.js"></script>
+        
+        <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+        
+        <!-- plus a jQuery UI theme, here I use "flick" -->
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+
+        <link rel="stylesheet" href="bootstrap\bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap\bootstrap-theme.min.css">
+        <script src="bootstrap\bootstrap.min.js"></script>
+       
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+        <link rel="stylesheet" href="social/social-buttons.css" type="text/css">
+    </head>
+    <body>
+        <div id="main"  class="container">
+            
+            <div id="topbar">
+                <!--<h2 id="title-text" style="float:right;">Google Maps Viewer</h2>-->
+                <div id="projects" >
+                    <div>
+                        <h4>Projects Underway</h4>
+                        <input type="button" value="Home" class="btn btn-lg" onclick="location.href = 'index.html'" />
+                        <input type="button" value="Link Zambia 8000" class="btn btn-lg"/>
+                        <input type="button" value="Pave Zambia 2000" class="btn btn-lg"/>
+                        <input type="button" value="Lusaka L400" class="btn btn-lg"/>
+                        <!--<input type="button" value="Formula 1" class="btn btn-lg"/>
+                        <input type="button" value="Lusaka 50km" class="btn btn-lg"/>-->
+                        <input type="button" value="All" class="btn btn-lg"/>
+                        <a class="btn btn-default btn-social btn-google-plus">
+                            <i class="fa fa-google-plus"></i> Share via Google+
+                        </a>
+                        <a class="btn btn-default btn-social btn-twitter">
+                            <i class="fa fa-twitter"></i> Share via Twitter
+                        </a>
+                        <a class="btn btn-default btn-social btn-facebook">
+                            <i class="fa fa-facebook"></i> Share via Facebook
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="timemachine">
+                <!--http://demosthenes.info/blog/757/Playing-With-The-HTML5-range-Slider-Input-->
+                <label for=timemachine1>Select Year</label>
+                <output for=timemachine1 id=yearselected>2015</output>
+                <input type=range min=2010 max=2015 value="2015" id=timemachine1 step=1 oninput="showval(value)"
+                       class="vertical" orient="vertical" list="yearticks"/>
+                <datalist id="yearticks">
+                    <option>2010</option>
+                    <option>2011</option>
+                    <option>2012</option>
+                    <option>2013</option>
+                    <option>2014</option>
+                    <option>2015</option>
+                </datalist>
+                <script>
+                    function showval(yearSel) {
+                        document.querySelector('#yearselected').value = yearSel;
+                    }
+                </script>
+            </div>
+            <div id ="map">
+            </div>
+            <!--<div id="roles" class="btn-group btn-group-lg">-->
+            <div id="roles">
+                <input type="button" value="Save Map" class="btn btn-lg"/>
+                <input type="button" value="Import Own Data" class="btn btn-lg"/>
+                <input type="button" value="Update Current Data" class="btn btn-lg"/>
+            </div>
+            <footer>
+                <p>Page footer and attributions</p>
+                <p>Data courtesy of Road Development Aganecy, Lusaka City Council, Ministry of Lands (Survey Department) and other sources.</p>
+            </footer>
+        </div>
+        <script>
+            var map;
+            google.maps.event.addDomListener(window, 'load',
+                function() {
+                    map = new google.maps.Map(document.getElementById('map'),
+                    {
+                        zoom: 16,
+                        //center: new google.maps.LatLng(-15.42714, 28.30715),
+                        center: new google.maps.LatLng(-15.41009, 28.34479),
+                        //mapTypeId: google.maps.MapTypeId.ROADMAP
+                        //mapTypeId: google.maps.MapTypeId.HYBRID
+                        mapTypeId:google.maps.MapTypeId.TERRAIN 
+                        //mapTypeId:google.maps.MapTypeId.SATELLITE 
+                        ,
+                        mapTypeControlOptions: {
+                            mapTypeIds: [
+                                //'coordinate',
+                                google.maps.MapTypeId.ROADMAP,
+                                google.maps.MapTypeId.HYBRID,
+                                google.maps.MapTypeId.TERRAIN,
+                                google.maps.MapTypeId.SATELLITE
+                            ],
+                            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+                        }
+                        , draggableCursor: "crosshair"
+                    });
+
+                    loadKmlLayer('data/lsk_roads_trunk/doc.kml', map);
+                    loadKmlLayer('data/lsk_roads_up/doc.kml', map);
+                    loadKmlLayer('data/lsk_roads_uu/doc.kml', map);
+
+                    //we add the kml layers
+                    //var road_options = {
+                    //    suppressInfoWindows: true,
+                    //    preserveViewport: false,
+                    //    map: map
+                    //};
+
+                    //new google.maps.KmlLayer('data/lsk_roads_trunk/doc.kml', road_options);
+                    //new google.maps.KmlLayer('data/lsk_roads_up/doc.kml', road_options);
+                    //new google.maps.KmlLayer('data/lsk_roads_uu/doc.kml', road_options);
+
+                    //drawing of lines connecting towns
+                    var flightPlanCoordinates = [
+                        //new google.maps.LatLng(-15.38057, 28.36440),
+                        //new google.maps.LatLng(-15.39109, 28.36716)
+                        new google.maps.LatLng(-15.408593, 28.344475),
+                        new google.maps.LatLng(-15.411676, 28.345199)
+
+                        //new google.maps.LatLng(-14.98665, 28.38303),
+                        //new google.maps.LatLng(-15.77758, 28.181499),
+                        //new google.maps.LatLng(-15.74686, 28.164619),
+                        //new google.maps.LatLng(-15.8673, 27.76123),
+                        //new google.maps.LatLng(-16.281309, 27.48576),
+                        //new google.maps.LatLng(-13.127, 28.381769),
+                        //new google.maps.LatLng(-12.96827, 28.633699),
+                        //new google.maps.LatLng(-12.80383, 28.21314),
+                        //new google.maps.LatLng(-12.73862, 28.17688),
+                        //new google.maps.LatLng(-12.55458, 28.26042),
+                        //new google.maps.LatLng(-12.54323, 27.85766),
+                        //new google.maps.LatLng(-17.035101, 26.48501),
+                        //new google.maps.LatLng(-12.37006, 27.821699),
+                        //new google.maps.LatLng(-13.63237, 32.64547),
+                        //new google.maps.LatLng(-11.202, 28.890711),
+                        //new google.maps.LatLng(-11.83663, 31.460951),
+                        //new google.maps.LatLng(-10.2084, 31.182529
+                        //new google.maps.LatLng(-9.388164, 30.10858),
+                        //new google.maps.LatLng(-8.846283, 31.37446),
+                        //new google.maps.LatLng(-9.307734, 32.763779),
+                    ];
+                    var flightPath = new google.maps.Polyline({
+                        path: flightPlanCoordinates,
+                        geodesic: true,
+                        strokeColor: '#d45500',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 5,
+                        label:'Drainage works'
+                    });
+                    flightPath.setMap(map);
+
+
+                    var marker1 = new google.maps.Marker({
+                        position: new google.maps.LatLng(-15.408593, 28.344475),
+                        map: map,
+                        title: 'Drainage works'
+                    });
+
+                    var marker2 = new google.maps.Marker({
+                        position: new google.maps.LatLng(-15.411676, 28.345199),
+                        map: map,
+                        title: 'Drainage works'
+                    });
+
+
+                    //drawing lines based on user clicks
+                    
+                    var polyOptions = {
+                        strokeColor: '#000000',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 3
+                    };
+                    poly = new google.maps.Polyline(polyOptions);
+                    poly.setMap(map);
+
+
+                    // Add a listener for the click event
+                    google.maps.event.addListener(map, 'click', addLatLng);
+                }
+            );
+
+            function loadKmlLayer(src, map) {
+                var kmlLayer = new google.maps.KmlLayer(src, {
+                    suppressInfoWindows: true,
+                    preserveViewport: false,
+                    map: map
+                });
+                google.maps.event.addListener(kmlLayer, 'click', function (event) {
+                    var content = event.featureData.infoWindowHtml;
+                    var testimonial = document.getElementById('capture');
+                    testimonial.innerHTML = content;
+                });
+            }
+
+            function addLatLng(event) {
+
+                var path = poly.getPath();
+
+                // Because path is an MVCArray, we can simply append a new coordinate
+                // and it will automatically appear.
+                path.push(event.latLng);
+
+                // Add a new marker at the new plotted point on the polyline.
+                var marker = new google.maps.Marker({
+                    position: event.latLng,
+                    title: '#' + path.getLength(),
+                    map: map
+                });
+            }
+        </script>
+    </body>
+</html>

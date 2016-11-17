@@ -1,0 +1,174 @@
+﻿body {
+    background-color: lightblue;
+}
+
+/*#main {
+    border: thin solid black;
+    background-color: lightcoral;
+    width: 960px;
+    margin: 0 auto;
+}*/
+
+/*header {
+    background-color: lightslategray;
+    padding-top: 0px;
+    margin-top: 0px;
+}*/
+#gsocial {
+    float: left;
+    height: 100px;
+    background-color: red;
+}
+#title-text, #title-subtext {
+    padding-right: 20px;
+    float: right;
+}
+
+#topbar {
+    float: left;
+    width: 100%;
+    /*background-color: rgb(184, 196, 202);*/
+}
+
+#topbar,#roles,#projects {
+    background-color: lightsteelblue;
+}
+
+#projects {
+    float: left;
+    padding-left: 30px;
+    padding-top: 10px;
+    /*background-color: lightsteelblue;*/
+}
+
+#timemachine, #map,#mapadditionalinfo {
+    border: thick solid lightsteelblue;
+    padding-left: 5px;
+    background-color: whitesmoke;
+}
+
+#timemachine {
+    float: left;
+    width: 10%;
+    height: 750px;
+    /*height: 600px;*/
+    /*background-color: whitesmoke;*/
+    /*height:*/ 
+    /*padding-left: 500px;*/
+}
+
+#timemachine1 {
+    /*width: 70%;*/
+    /*background-color: red;*/
+height: 75%;
+}
+
+input.vertical { -webkit-appearance: slider-vertical; writing-mode: bt-lr; }
+
+#map {
+    float: left;
+    width: 90%;
+    height: 720px;
+    /*height: 600px;*/
+    /*background-color: whitesmoke;*/
+    /*border: thin solid lightsteelblue;*/
+    /*padding-left: 5px*/
+    /*background: url(map.png) repeat-x;*/
+}
+
+#mapadditionalinfo {
+    float: left;
+    width: 90%;
+    height: 30px;
+}
+
+footer {
+    visibility: hidden;
+    background-color: lightseagreen;
+    clear: both;
+    height: 0px;
+}
+
+#roles {
+    /*background-color: pink;*/
+    float: left;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+}
+
+.popupdiv
+{
+    /*box-shadow: 0 0 15px #3b5998;
+    border-radius: 5px;
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: lightsteelblue;
+    background: rgba(176,196,222,0.8);*/
+}
+
+#saveCommentAndImageBtn {
+    float: right;
+}
+
+.form-control, #otherCommentsTxt {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-control:focus, #otherCommentsTxt {
+  z-index: 2;
+}
+
+.infowindowclass, .legend, .canvaslegend, .addnewprojectdlg
+{
+    box-shadow: 0 0 15px #3b5998;
+    border-radius: 5px;
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: lightsteelblue;
+    background: rgba(176,196,222,0.8);
+}
+
+.roadmarker {
+    background-color: red;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 0 8px #8b4513;
+    border-radius: 5px;
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: lightsteelblue;
+    background: rgba(176, 196, 222, 0.8);
+}
+
+.myroadmarker {
+    background-color: red;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 0 5px #3b5998;
+    border-radius: 5px;
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif=
+        hj`e    z 
+    /*background: lightsteelblue;*/
+    background: saddlebrown;
+    background: rgba(139, 69, 19, 0.8);
+}
+
+.infowindowclass h5, .legend h5 {
+    margin: 0 0 5px;
+    color: #3b5998;
+}
+
+/*.canvaslegend {
+    width: 500px;
+    height: 50px;
+}*/
+

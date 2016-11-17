@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)http://openlayers.org/en/v3.0.0/examples/select-features.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="./Select features example_files/ol.css" type="text/css">
+    <link rel="stylesheet" href="./Select features example_files/ol.css" type="text/css">
+    <link rel="stylesheet" href="./Select features example_files/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="./Select features example_files/layout.css" type="text/css">
+    <link rel="stylesheet" href="./Select features example_files/bootstrap-responsive.min.css" type="text/css">
+    <title>Select features example</title>
+  </head>
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="http://openlayers.org/en/v3.0.0/examples/"><img src="./Select features example_files/logo.png"> OpenLayers 3 Examples</a>
+        <form class="navbar-form pull-right"><select class="input-medium"><option value="raw">Development</option><option value="advanced">Production</option></select></form></div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div id="map" class="map"><div class="ol-viewport" style="position: relative; overflow: hidden; width: 100%; height: 100%;"><canvas class="ol-unselectable" width="1880" height="400" style="width: 100%; height: 100%;"></canvas><div class="ol-overlaycontainer"></div><div class="ol-overlaycontainer-stopevent"><div class="ol-zoom ol-unselectable ol-control"><button class="ol-zoom-in ol-has-tooltip" type="button"><span role="tooltip">Zoom in</span>+</button><button class="ol-zoom-out  ol-has-tooltip" type="button"><span role="tooltip">Zoom out</span>−</button></div><div class="ol-rotate ol-unselectable ol-control" style="opacity: 0;"><button class="ol-rotate-reset ol-has-tooltip" name="ResetRotation" type="button"><span role="tooltip">Reset rotation</span><span class="ol-compass" style="-webkit-transform: rotate(0deg); transform: rotate(0deg);">⇧</span></button></div><div class="ol-attribution ol-unselectable ol-control ol-collapsed"><ul><li style=""><a href="http://openlayers.org/" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAAHGAAABxgEXwfpGAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAhNQTFRF////AP//AICAgP//AFVVQECA////K1VVSbbbYL/fJ05idsTYJFtbbcjbJllmZszWWMTOIFhoHlNiZszTa9DdUcHNHlNlV8XRIVdiasrUHlZjIVZjaMnVH1RlIFRkH1RkH1ZlasvYasvXVsPQH1VkacnVa8vWIVZjIFRjVMPQa8rXIVVkXsXRsNveIFVkIFZlIVVj3eDeh6GmbMvXH1ZkIFRka8rWbMvXIFVkIFVjIFVkbMvWH1VjbMvWIFVlbcvWIFVla8vVIFVkbMvWbMvVH1VkbMvWIFVlbcvWIFVkbcvVbMvWjNPbIFVkU8LPwMzNIFVkbczWIFVkbsvWbMvXIFVkRnB8bcvW2+TkW8XRIFVkIlZlJVloJlpoKlxrLl9tMmJwOWd0Omh1RXF8TneCT3iDUHiDU8LPVMLPVcLPVcPQVsPPVsPQV8PQWMTQWsTQW8TQXMXSXsXRX4SNX8bSYMfTYcfTYsfTY8jUZcfSZsnUaIqTacrVasrVa8jTa8rWbI2VbMvWbcvWdJObdcvUdszUd8vVeJaee87Yfc3WgJyjhqGnitDYjaarldPZnrK2oNbborW5o9bbo9fbpLa6q9ndrL3ArtndscDDutzfu8fJwN7gwt7gxc/QyuHhy+HizeHi0NfX0+Pj19zb1+Tj2uXk29/e3uLg3+Lh3+bl4uXj4ufl4+fl5Ofl5ufl5ujm5+jmySDnBAAAAFp0Uk5TAAECAgMEBAYHCA0NDg4UGRogIiMmKSssLzU7PkJJT1JTVFliY2hrdHZ3foSFhYeJjY2QkpugqbG1tre5w8zQ09XY3uXn6+zx8vT09vf4+Pj5+fr6/P39/f3+gz7SsAAAAVVJREFUOMtjYKA7EBDnwCPLrObS1BRiLoJLnte6CQy8FLHLCzs2QUG4FjZ5GbcmBDDjxJBXDWxCBrb8aM4zbkIDzpLYnAcE9VXlJSWlZRU13koIeW57mGx5XjoMZEUqwxWYQaQbSzLSkYGfKFSe0QMsX5WbjgY0YS4MBplemI4BdGBW+DQ11eZiymfqQuXZIjqwyadPNoSZ4L+0FVM6e+oGI6g8a9iKNT3o8kVzNkzRg5lgl7p4wyRUL9Yt2jAxVh6mQCogae6GmflI8p0r13VFWTHBQ0rWPW7ahgWVcPm+9cuLoyy4kCJDzCm6d8PSFoh0zvQNC5OjDJhQopPPJqph1doJBUD5tnkbZiUEqaCnB3bTqLTFG1bPn71kw4b+GFdpLElKIzRxxgYgWNYc5SCENVHKeUaltHdXx0dZ8uBI1hJ2UUDgq82CM2MwKeibqAvSO7MCABq0wXEPiqWEAAAAAElFTkSuQmCC"></a><img src="./Select features example_files/mq_logo.png"></li><li>Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a></li><li>Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency</li></ul><button class="ol-has-tooltip" type="button"><span>i</span><span role="tooltip">Attributions</span></button></div></div></div></div>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+
+        <div class="span12">
+          <h4 id="title">Select features example</h4>
+          <p id="shortdesc">Example of using the Select interaction. Choose between <code>Single-click</code>, <code>Click</code> and <code>Hover</code> as the event type for selection in the combobox below. When using <code>Single-click</code> or <code>Click</code> you can hold do <code>Shift</code> key to toggle the feature in the selection.</p>
+          <p>Note: when <code>Single-click</code> is used double-clicks won't select features. This in contrast to <code>Click</code>, where a double-click will both select the feature and zoom the map (because of the <code>DoubleClickZoom</code> interaction). Note that <code>Single-click</code> is less responsive than <code>Click</code> because of the delay it uses to detect double-clicks.</p>
+          <form class="form-inline">
+            <label>Action type &nbsp;</label>
+              <select id="type">
+                <option value="none" selected="">None</option>
+                <option value="singleclick">Single-click</option>
+                <option value="click">Click</option>
+                <option value="mousemove">Hover</option>
+              </select>
+          </form>
+          <div id="docs">
+            <p>See the <a href="./Select features example_files/select-features.js" target="_blank">select-features.js source</a> to see how this is done.</p>
+          </div>
+          <div id="tags">select, vector</div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <script src="./Select features example_files/jquery.min.js" type="text/javascript"></script>
+    <script src="./Select features example_files/example-behaviour.js" type="text/javascript"></script>
+    <script src="./Select features example_files/loader.js" type="text/javascript"></script><script type="text/javascript" src="./Select features example_files/ol.js"></script><script type="text/javascript" src="./Select features example_files/select-features.js"></script>
+
+  
+
+</body></html>
